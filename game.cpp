@@ -10,9 +10,10 @@ Game::Game(QWidget *parent) :
     typingTime.setHMS(0, 0, 0, 0);
 
     //set text
+    sourceText.setTextInteractionFlags(Qt::NoTextInteraction);
     sourceText.setText(source);
-    sourceText.setFixedSize(600, 500);
-    sourceText.setWordWrap(true);
+    sourceText.setFixedSize(400, 300);
+    sourceText.setStyleSheet("selection-color: white; selection-background-color: blue;");
     QFont font = sourceText.font();
     font.setPixelSize(16);
     sourceText.setFont(font);
@@ -24,7 +25,7 @@ Game::Game(QWidget *parent) :
     //set progress bar
     progress.setRange(0, 100);
     progress.setAlignment(Qt::AlignCenter);
-    progress.setFixedSize(600, 20);
+    progress.setFixedSize(400, 20);
 
     //add to window
     layout.addWidget(&sourceText);
@@ -68,7 +69,10 @@ void Game::compare()
             mistakePos = -1;
 
         if (mistakePos == -1)
+        {
             incProgress();
+            selectTypedText();
+        }
 
         //go to next word
         if (mistakePos == -1 && source[position] == ' ')
@@ -169,6 +173,14 @@ void Game::incProgress()
     progress.setValue(((charsAmount - source.size() + current.size()) * 100) / charsAmount);
 }
 
+//user could see what he already typed
+void Game::selectTypedText()
+{
+    QTextCursor c = sourceText.textCursor();
+    c.setPosition(0);
+    c.setPosition(charsAmount - source.size() + current.size(), QTextCursor::KeepAnchor);
+    sourceText.setTextCursor(c);
+}
 
 //controls each user input
 void Game::checkEdit()
@@ -201,6 +213,11 @@ void Game::checkEdit()
         //check for end
         if (mistakePos == -1 && position + 1 == source.size())
             finish();
+    }
+    else
+    {
+        incProgress();
+        selectTypedText();
     }
 }
 

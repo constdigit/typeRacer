@@ -8,6 +8,7 @@
 #include <QMessageBox>
 #include <QPainter>
 #include <QProgressBar>
+#include <QTextEdit>
 #include <QTextStream>
 #include <QTime>
 #include <QVBoxLayout>
@@ -35,6 +36,8 @@ public:
     QString getFirstWordFromSource();
     //progress increases if user didn't make mistakes
     void incProgress();
+    //user could see what he already typed
+    void selectTypedText();
 
 private:
     //sets to true with first input
@@ -55,7 +58,7 @@ private:
     //keeps text that user typed
     QString current;
     //show source text
-    QLabel sourceText;
+    QTextEdit sourceText;
     //user input
     QLineEdit typing;
     //user input lies under text
