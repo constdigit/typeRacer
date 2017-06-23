@@ -21,9 +21,15 @@ Game::Game(QWidget *parent) :
     //check characters that user is typing
     QObject::connect(&typing, SIGNAL(textEdited(QString)), this, SLOT(checkEdit()));
 
+    //set progress bar
+    progress.setRange(0, 100);
+    progress.setAlignment(Qt::AlignCenter);
+    progress.setFixedSize(600, 20);
+
     //add to window
     layout.addWidget(&sourceText);
     layout.addWidget(&typing);
+    layout.addWidget(&progress);
 
     setLayout(&layout);
 }
@@ -60,6 +66,10 @@ void Game::compare()
         //when input is correct
         if (position <= mistakePos || getFirstWordFromSource().contains(current))
             mistakePos = -1;
+
+        if (mistakePos == -1)
+            incProgress();
+
         //go to next word
         if (mistakePos == -1 && source[position] == ' ')
         {
@@ -69,6 +79,8 @@ void Game::compare()
             wordsAmount++;
         }
     }
+
+    //change text color
     highlight();
 }
 
@@ -105,6 +117,7 @@ void Game::finish()
         modified = false;
         charsAmount = source.size();
         wordsAmount = 0;
+        progress.reset();
     }
 
 }
@@ -135,6 +148,29 @@ void Game::getSourceText()
     file.close();
 }
 
+//get current word for typing
+QString Game::getFirstWordFromSource()
+{
+    QString word;
+    int i(0);
+    while (source[i] != ' ' && i < source.size())
+    {
+            word += source[i];
+            i++;
+    }
+    word += ' ';
+
+    return word;
+}
+
+//progress increases if user didn't make mistakes
+void Game::incProgress()
+{
+    progress.setValue(((charsAmount - source.size() + current.size()) * 100) / charsAmount);
+}
+
+
+//controls each user input
 void Game::checkEdit()
 {
     //start of timer with first inputed character
@@ -168,17 +204,5 @@ void Game::checkEdit()
     }
 }
 
-//get current word for typing
-QString Game::getFirstWordFromSource()
-{
-    QString word;
-    int i(0);
-    while (source[i] != ' ' && i < source.size())
-    {
-            word += source[i];
-            i++;
-    }
-    word += ' ';
 
-    return word;
-}
+

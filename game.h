@@ -7,6 +7,7 @@
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QPainter>
+#include <QProgressBar>
 #include <QTextStream>
 #include <QTime>
 #include <QVBoxLayout>
@@ -32,6 +33,8 @@ public:
     void getSourceText();
     //get current word for typing
     QString getFirstWordFromSource();
+    //progress increases if user didn't make mistakes
+    void incProgress();
 
 private:
     //sets to true with first input
@@ -47,7 +50,6 @@ private:
 
     //for count time
     QTime typingTime;
-    QVector<QString> texts;
     //keeps text that user must type
     QString source;
     //keeps text that user typed
@@ -58,8 +60,11 @@ private:
     QLineEdit typing;
     //user input lies under text
     QVBoxLayout layout;
+    //see progress
+    QProgressBar progress;
 
 public slots:
+    //controls each user input
     void checkEdit();
 };
 
