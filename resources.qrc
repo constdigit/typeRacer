@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/animation">
+        <file>dots.gif</file>
+    </qresource>
+	<qresource prefix="/texts">
+        <file>text0.txt</file>
+		<file>text1.txt</file>
+		<file>text2.txt</file>
+		<file>text3.txt</file>
+		<file>text4.txt</file>
+		<file>text5.txt</file>
+		<file>text6.txt</file>
+		<file>text7.txt</file>
+		<file>text8.txt</file>
+		<file>text9.txt</file>
+    </qresource>
+</RCC>
