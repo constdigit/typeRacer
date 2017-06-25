@@ -32,15 +32,33 @@ startMenu::startMenu(QWidget *parent) :QWidget(parent)
 void startMenu::onPlayButtonClicked()
 {
     //open game window
-    Game * g = new Game();
-    g->show();
-    close();
+    try
+    {
+        Game * g = new Game();
+        g->show();
+        close();
+    }
+    catch (std::bad_alloc &exc)
+    {
+        QMessageBox errorMessage;
+        errorMessage.setText(QString::fromLatin1(exc.what()));
+        errorMessage.show();
+    }
 }
 
 //get about message
 void startMenu::onAbuoutButtonClicked()
 {
-    about * a = new about();
+    try
+    {
+        about * a = new about();
+    }
+    catch (std::bad_alloc &exc)
+    {
+        QMessageBox errorMessage;
+        errorMessage.setText(QString::fromLatin1(exc.what()));
+        errorMessage.show();
+    }
 }
 
 //close

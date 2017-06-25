@@ -65,7 +65,7 @@ void Game::compare()
     else
     {
         //when input is correct
-        if (position <= mistakePos || getFirstWordFromSource().contains(current))
+        if (position < mistakePos || getFirstWordFromSource().contains(current))
             mistakePos = -1;
 
         if (mistakePos == -1)

@@ -10,7 +10,6 @@
 #include <QProgressBar>
 #include <QTextEdit>
 #include <QTextStream>
-#include <QTime>
 #include <QVBoxLayout>
 #include <QWidget>
 #include <time.h>
